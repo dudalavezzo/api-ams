@@ -20,9 +20,24 @@ o conteudo entra na variavel id
 
 switch($metodoSolicitado){
     case "POST":
-        $dados_recebidos = json_decode(file_get_contents("php://input"), true)
+        $dados_recebidos = json_decode(file_get_contents("php://input"), true);
         break;
     case "GET":
-        echo "{ 'Veio do navegador";
+        $servidor = "localhost";
+        $usuario = "root";
+        $senha = "";
+        $banco = "aula_pw3";
+
+        $conexao = new mysqli($servidor, $usuario, $senha, $banco);
+
+        $sql = "Select * from materias";
+
+        $resultado = $conexao->query($ql);
+
+        while ($linha = $resultado-> fetch_assoc()) {
+            $materias[] = $linha;
+        }
+
+        echo json_encode($resultado-> fetch_assoc());
         break;
 }
